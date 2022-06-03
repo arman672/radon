@@ -2,40 +2,47 @@ const express = require('express');
 const myHelper = require('../util/helper')
 const underscore = require('underscore')
 
-const router = express.Router();
+const app = express.Router();
 
-router.get('/test-me', function (req, res) {
-    myHelper.printDate()
-    myHelper.getCurrentMonth()
-    myHelper.getCohortData()
-    let firstElement = underscore.first(['Sabiha','Akash','Pritesh'])
-    console.log('The first element received from underscope function is '+firstElement)
-    res.send('My first ever api!')
-});
+app.get("/sol1", function (req, res) {
 
-router.get('/hello', function (req, res) {
-   
-    res.send('Hello there!')
-});
+    //logic : sum of numbers is n(n+1)/2..so get sum of all numbers in array. now take sum of numbers till last digit in the array
 
-router.get('/candidates', function(req, res){
-    console.log('Query paramters for this request are '+JSON.stringify(req.query))
-    let gender = req.query.gender
-    let state = req.query.state
-    let district = req.query.district
-    console.log('State is '+state)
-    console.log('Gender is '+gender)
-    console.log('District is '+district)
-    let candidates = ['Akash','Suman']
-    res.send(candidates)
-})
+    let arr= [1,2,3,5,6,7]
+  
+    let total = 0;
+    for (let index = 0; index < arr.length; index++) {
+        total +=arr[index]      
+    }
+  
+    let n= arr[arr.length-1]
+    let consecutiveSum= n * (n+1) / 2 //here n is the last no
+    let missingNo= consecutiveSum - total
+  
+    console.log(arr.length)
+    res.send(  { data: missingNo }  );
 
-router.get('/candidates/:canidatesName', function(req, res){
-    console.log('The request objects is '+ JSON.stringify(req.params))
-    console.log('Candidates name is '+req.params.canidatesName)
-    res.send('Done')
-})
+  });
+ 
+app.get("/sol2", function (req, res) {
+
+    //logic : sum of n consecutive numbers is [ n * (first + last) / 2  ]..so get sum of all numbers in array. now take sum of n consecutive numbers.. n would be length+1 as 1 number is missing
+
+   let arr= [33, 34, 35, 37, 38]
+   let n= arr.length + 1 //because one no is missing
+   let total = 0;
+   for (let index = 0; index < arr.length; index++) {
+       total +=arr[index]      
+   }
+ 
+   let firstNo= arr[0]
+   let lastNo= arr[arr.length-1]
+   let consecutiveSum= n * (firstNo+ lastNo ) / 2 //here n is the length of arraywhich is 5 + 1 because 1 number is missing
+   let missingNo= consecutiveSum - total
+   console.log(n)
+   res.send(  { data: missingNo  }  );
+ });
 
 
-module.exports = router;
+module.exports = app;
 // adding this comment for no reason
