@@ -6,6 +6,58 @@ const { get } = require('express/lib/response');
 
 const router = express.Router();
 
+
+
+//
+const arr = ['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
+//1
+router.get('/GET/movies', function(req, res){
+    res.send(arr)
+})
+
+//2 & 3
+router.get('/GET/movies/:indexNumber', function(req, res){
+  const movieIndex = req.params.indexNumber
+  if(movieIndex < arr.length)
+  {
+    const movie = arr[movieIndex]
+    res.send(movie)
+  }
+  else
+  res.send("error: enter a valid index")
+})
+
+
+const arrFilm = [{
+  'id': 1,
+  'name': 'The Shining'
+ },
+ {
+  'id': 2,
+  'name': 'Incendies'
+ },
+ {
+  'id': 3,
+  'name': 'Rang de Basanti'
+ },
+ {
+  'id': 4,
+  'name': 'Finding Nemo'
+ }
+ ]
+ //4
+ router.get('/GET/films', function(req, res){
+   res.send(arrFilm)
+})
+ //5
+router.get('/GET/films/:filmId', function(req, res){
+  const fId = parseInt(req.params.filmId)
+  if(fId <= arr.length && fId !== 0)
+    res.send(arrFilm[fId-1])
+  else
+  res.send('No movie exists with this id')
+})
+
 router.get('/hello', function (req, res) {
     
 
@@ -39,25 +91,6 @@ router.get('/hello', function (req, res) {
     const getPair = lodash.fromPairs(arr)
     console.log(getPair)
 });
-
-// router.get('/candidates', function(req, res){
-//     console.log('Query paramters for this request are '+JSON.stringify(req.query))
-//     let gender = req.query.gender
-//     let state = req.query.state
-//     let district = req.query.district
-//     console.log('State is '+state)
-//     console.log('Gender is '+gender)
-//     console.log('District is '+district)
-//     let candidates = ['Akash','Suman']
-//     res.send(candidates)
-// })
-
-// router.get('/candidates/:canidatesName', function(req, res){
-//     console.log('The request objects is '+ JSON.stringify(req.params))
-//     console.log('Candidates name is '+req.params.canidatesName)
-//     res.send('Done')
-// })
-
 
 module.exports = router;
 // adding this comment for no reason
