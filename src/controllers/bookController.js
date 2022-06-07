@@ -9,7 +9,7 @@ const createBook= async function (req, res) {
 }
 
 const getBooksData= async function (req, res) {
-    let allBooks= await BookModel.find().select({bookName: 1, authorName: 1, _id: -1})
+    let allBooks= await BookModel.find().select({bookName: 1, authorName: 1, _id: 0})
     res.send(allBooks)
 }
 
@@ -20,7 +20,6 @@ const getBooksInYear= async function(req, res){
 }
 
 const getXINRBooks = async function(req,res){
-    //let priceInr = bookModel.price.indianPrice
     let books = await BookModel.find({$or: [{"price.indianPrice": 100}, {"price.indianPrice": 200}, {"price.indianPrice": 500}]})
     res.send({books})
 }
