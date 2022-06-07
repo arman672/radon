@@ -11,7 +11,7 @@ const createBook= async function (req, res) {
         res.send({msg: savedData})
     }
     else
-    res.send({msg: "no author id"})
+    res.send({msg: "author id missing"})
 }
 const getBookByAuthor = async function(req, res){
     let authorByName = await AuthorModel.findOne({author_name:"Chetan Bhagat"})
@@ -31,13 +31,13 @@ const findAuthor = async function(req, res){
 }
 
 const getBooksBwPrice = async function(req,res){
-    let books = await BookModel.find( { price : { $gte: 50, $lte: 100} } ).select({ author_id :1})
+    let books = await BookModel.find( { price : { $gte: 50, $lte: 100} } ).select({ author_id :1, name :1})
     let authors = await AuthorModel.find().select({ author_id :1, author_name: 1})
     let data = []
     for(let i =0; i < authors.length;i++){
         books.forEach(element => { 
             if(element.author_id == authors[i].author_id){
-                data.push({"Author Name": authors[i].author_name, "Author ID": element.author_id})
+                data.push({"Book Name": element.name, "Author Name": authors[i].author_name})
             }
         });
     }
@@ -45,6 +45,6 @@ const getBooksBwPrice = async function(req,res){
     }
 module.exports.createBook= createBook
 module.exports.getBookByAuthor= getBookByAuthor 
-module.exports.findAuthor= findAuthor
+module.exports.findAuthor= findAuthor  
 module.exports.getBooksBwPrice= getBooksBwPrice
 
