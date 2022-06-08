@@ -2,6 +2,7 @@ const { count } = require("console")
 const BookModel = require("../models/bookModel")
 const AuthorModel = require("../models/authorModel")
 const { match } = require("assert")
+const bookModel = require("../models/bookModel")
 
 const createBook= async function (req, res) {
     let data= req.body
@@ -42,9 +43,34 @@ const getBooksBwPrice = async function(req,res){
         });
     }
     res.send({data})
+}
+
+const getBooksByAuthorId = async function(req,res){
+    const authorId = parseInt(req.params.authorId)
+    const books = await BookModel.find({author_id:authorId}).select({name:1,_id:0})
+    console.log(typeof authorId)
+    console.log(books)
+    res.send({books})
+}
+
+const getAuthorsOlderThanAge = async function(req,res){
+    const authors = await AuthorModel.find({age:{ $gt: 50}}).select({author_name:1,age:1,_id:0,author_id:1})
+    let books = await BookModel.find({ratings:{$gt: 4}})
+    let data = []
+    for(let i =0; i < authors.length;i++){
+        books.forEach(element => { 
+            if(element.author_id == authors[i].author_id){
+                data.push({"Author Name": authors[i].author_name, "Age": authors[i].age})
+            }
+        });
     }
+    res.send({data})  
+}
+
 module.exports.createBook= createBook
 module.exports.getBookByAuthor= getBookByAuthor 
 module.exports.findAuthor= findAuthor  
 module.exports.getBooksBwPrice= getBooksBwPrice
+module.exports.getBooksByAuthorId= getBooksByAuthorId
+module.exports.getAuthorsOlderThanAge= getAuthorsOlderThanAge
 
