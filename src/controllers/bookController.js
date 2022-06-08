@@ -46,10 +46,8 @@ const getBooksBwPrice = async function(req,res){
 }
 
 const getBooksByAuthorId = async function(req,res){
-    const authorId = parseInt(req.params.authorId)
+    const authorId = req.params.authorId
     const books = await BookModel.find({author_id:authorId}).select({name:1,_id:0})
-    console.log(typeof authorId)
-    console.log(books)
     res.send({books})
 }
 
@@ -65,7 +63,7 @@ const getAuthorsOlderThanAge = async function(req,res){
         });
     }
     res.send({data})  
-}
+}   
 
 module.exports.createBook= createBook
 module.exports.getBookByAuthor= getBookByAuthor 
