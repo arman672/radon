@@ -25,7 +25,7 @@ router.get("/createPublisher", publisherController.createPublisher)
 
 router.put("/updatePrice", bookController.updatePrice)
 
-router.put("/updateAllFeild", bookController.updateAllfield)
+router.put("/updateAllfield", bookController.updateAllfield)
 
 module.exports = router;
 

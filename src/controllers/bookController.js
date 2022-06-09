@@ -34,13 +34,14 @@ const getBooksWithAuthorDetails = async function (req, res) {
 }
 
 const updatePrice = async function(req,res){
-    let updatedData = await bookModel.find({rating:{$gt:3.5}}).updateMany({$inc: {"price": 10}})
+    let updatedData = await bookModel.find({ratings:{$gt:3.5}}).updateMany({$inc: {"price": 10}})
     res.send({updatedData})
 } 
 
 const updateAllfield = async function(req,res){
-    let updateFeild = await bookModel.find({rating:{$gt:0}}).updateMany({$set: {"isHardCover": true}})
-    res.send({updateFeild})
+    let addField = await bookModel.find().updateMany({$set: {"isHardCover": false}})
+    let updatedField = await bookModel.find({ $or: [ { "publisher":"62a1e10e87b8718c7f57e61c" }, { "publisher":"62a20ee6d6309b206a56c4cf" }] }).updateMany({$set: {"isHardCover": true}})
+    res.send({updatedField})
 } 
 
 module.exports.createBook= createBook
