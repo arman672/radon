@@ -15,11 +15,20 @@ mongoose.connect("mongodb+srv://functionup-cohort:G0Loxqc9wFEGyEeJ@cluster0.rzot
 .catch ( err => console.log(err) )
 
 app.use (
-    function (req, res, next) {
-        console.log ("inside GLOBAL MW");
-        next();
-  }
-  );
+    function(req,res,next){
+        const url = req.url
+        const ip = req.ip;
+        let currentdate = new Date(); 
+        let datetime = currentdate.getDate() + "-"
+        + (currentdate.getMonth()+1)  + "-" 
+        + currentdate.getFullYear() + " "  
+        + currentdate.getHours() + ":"  
+        + currentdate.getMinutes() + ":" 
+        + currentdate.getSeconds();
+        console.log(datetime,url,ip)
+        next()
+    }
+);
 
 app.use('/', route);
 
