@@ -5,22 +5,28 @@ const mid1= function ( req, res, next) {
     next()
 }
 
-const mid2= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid2")
-    next()
+const checkFreeAppUser= function ( req, res, next) {
+    let checkIfFreeUser= req.headers["isfreeappuser"]
+    console.log(checkIfFreeUser)
+    if(checkIfFreeUser === undefined){
+        res.send({error:"missing a mandatory header"})
+    }
+    else{
+        if(checkIfFreeUser === "true"){
+            req.isFreeAppUser = true
+        }
+        else{
+            req.isFreeAppUser = false
+        }
+        next()    
+    }
 }
+// const checkHeader = async ( req, res, next) => {
+//     let header = req.headers.isfreeuser;
+//    if(!(checkIfFreeUser == "true" || checkIfFreeUser == "false"))
+//     return res.send({msg:"request is missing a mandatory header"})
+//     next()
+// };
+//module.exports.checkHeader = checkHeader
 
-const mid3= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid3")
-    next()
-}
-
-const mid4= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid4")
-    next()
-}
-
-module.exports.mid1= mid1
-module.exports.mid2= mid2
-module.exports.mid3= mid3
-module.exports.mid4= mid4
+module.exports.checkFreeAppUser = checkFreeAppUser
