@@ -1,4 +1,4 @@
-//const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
 const createUser = async function (abcd, xyz) {
@@ -32,7 +32,7 @@ const loginUser = async function (req, res) {
   let token = jwt.sign(
     {
       userId: user._id.toString(),
-      batch: "thorium",
+      batch: "radon",
       organisation: "FunctionUp",
     },
     "functionup-radon"
@@ -61,7 +61,7 @@ const getUserData = async function (req, res) {
   //   return res.send({ status: false, msg: "token is invalid" });
 
   let userId = req.params.userId;
-  let userDetails = await userModel.findById(userId);
+  let userDetails = await userModel.findById(userId);//.findById(userId)
   if (!userDetails)
     return res.send({ status: false, msg: "No such user exists" });
 
@@ -91,9 +91,9 @@ const updateUser = async function (req, res) {
   let user = await userModel.findById(userId);
 
   //Return an error if no user with the given id exists in the db
-  // if (!user) {
-  //   return res.send("No such user exists");
-  // }
+  if (!user) {
+      return res.send("No such user exists");
+  }
 
   let userData = req.body;
   console.log(userData);
