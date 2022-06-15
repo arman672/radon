@@ -40,5 +40,7 @@ If present, check that the token is valid.
 - Once, all the apis are working fine, move the authentication related code in a middleware called auth.js
 - Add this middleware at route level in the routes where applicable.
 
-
++ Please note that you have to also write the logic for authorisation now so that a logged in user can modify or fetch only their own data.
++ You have to implement authorisation for fetch user details, update user and delete user apisg
++ You have to move this similar code in all three apis in a suitable middleware
 
